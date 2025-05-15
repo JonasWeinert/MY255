@@ -1,5 +1,19 @@
 # Master script for COVID-19 HBM Analysis Pipeline
 
+
+if (sys.nframe() > 0L && !is.null(sys.frame(1L)$ofile)) {
+  script_path <- normalizePath(sys.frame(1L)$ofile)
+  script_dir <- dirname(script_path)
+  if (dir.exists(script_dir)) {
+    setwd(script_dir)
+    cat(paste("Working directory set to script location:", script_dir, "\n"))
+  } else {
+    cat(paste("Warning: Could not set working directory to script location:", script_dir, "\n"))
+  }
+} else {
+  cat(paste("Warning: Not able to automatically determine script location to set working directory.\nEnsure all .R script files are in the current working directory:", getwd(), "\n"))
+}
+
 # --- 1. Package Management ---
 required_packages <- c(
   "dplyr", "lavaan", "ggplot2", "gridExtra", "scales", "forestplot", 
